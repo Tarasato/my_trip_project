@@ -6,7 +6,7 @@ class Profile {
   String? phone;
   String? password;
   String? fullname;
-  String? userpicture;
+  //String? userpicture;
 
   Profile(
       {this.message,
@@ -16,7 +16,8 @@ class Profile {
       this.phone,
       this.password,
       this.fullname,
-      this.userpicture});
+      //this.userpicture
+      });
 
   Profile.fromJson(Map<String, dynamic> json) {
     message = json['message'];
@@ -26,7 +27,7 @@ class Profile {
     phone = json['phone'];
     password = json['password'];
     fullname = json['fullname'];
-    userpicture = json['userpicture'];
+    //userpicture = json['userpicture'];
   }
 
   Map<String, dynamic> toJson() {
@@ -38,7 +39,7 @@ class Profile {
     data['phone'] = this.phone;
     data['password'] = this.password;
     data['fullname'] = this.fullname;
-    data['userpicture'] = this.userpicture;
+    //data['userpicture'] = this.userpicture;
     return data;
   }
 }

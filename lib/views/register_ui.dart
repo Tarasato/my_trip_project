@@ -91,6 +91,38 @@ class _RegisterUIState extends State<RegisterUI> {
     );
   }
 
+  Future showCompleteDialog(context, msg) {
+    return showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Align(
+          alignment: Alignment.center,
+          child: Text(
+            'ผลการทำงาน',
+          ),
+        ),
+        content: Text(
+          msg,
+        ),
+        actions: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text(
+                  'ตกลง',
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -265,7 +297,7 @@ class _RegisterUIState extends State<RegisterUI> {
                       showWarningMessage(context, 'กรุณาป้อนอีเมลล์');
                     } else if (phoneCtrl.text.trim().isEmpty == true) {
                       showWarningMessage(context, 'กรุณาป้อนเบอร์โทรศัพท์');
-                    }else if (phoneCtrl.text.trim().length != 10) {
+                    } else if (phoneCtrl.text.trim().length != 10) {
                       showWarningMessage(context, 'กรุณาป้อนเบอร์โทรศัพท์ให้ถูกต้อง');
                     } else if (usernameCtrl.text.trim().isEmpty == true) {
                       showWarningMessage(context, 'กรุณาป้อนชื่อผู้ใช้');
@@ -274,28 +306,28 @@ class _RegisterUIState extends State<RegisterUI> {
                     } else if (showImage == null) {
                       showWarningMessage(context, 'กรุณาถ่ายรูป/เลือกรูป');
                     } else {
-                      final bytes = await showImage!.readAsBytes();
-                      userPicture64 = base64Encode(bytes);
+                      //final bytes = await showImage!.readAsBytes();
+                      //userPicture64 = base64Encode(bytes);
                       //บันทึกลงฐานข้อมูล
                       Profile profile = Profile(
-                              username: usernameCtrl.text.trim(),
-                              password: passwordCtrl.text.trim(),
-                              email: emailCtrl.text.trim(),
-                              phone: phoneCtrl.text.trim(),
-                              fullname: fullnameCtrl.text.trim(),
-                              userpicture: userPicture64,
-                            );
-                            // CallAPI.callnewProfileAPI(profile).then((value) {
-                            //   if (value.message == '1') {
-                            //     Navigator.pushReplacement(
-                            //         context,
-                            //         MaterialPageRoute(
-                            //             builder: (context) => LoginUI()));
-                            //   } else {
-                            //     showWarningMessage(
-                            //         context, 'เกิดข้อผิดพลาด กรุณาติดต่อผู้ดูแลระบบ');
-                            //   }
-                            // });
+                        username: usernameCtrl.text.trim(),
+                        password: passwordCtrl.text.trim(),
+                        email: emailCtrl.text.trim(),
+                        phone: phoneCtrl.text.trim(),
+                        fullname: fullnameCtrl.text.trim(),
+                        //userpicture: userPicture64,
+                      );
+                      CallAPI.callRegisterAPI(profile).then((value) {
+                        if (value.message == '1') {
+                          showCompleteDialog(context, 'ลงทะเบียนสำเร็จ!!')
+                              .then((value) {
+                            Navigator.pop(context);
+                          });
+                        } else {
+                          showWarningMessage(
+                              context, 'เกิดข้อผิดพลาด กรุณาติดต่อผู้ดูแลระบบ');
+                        }
+                      });
                     }
                   },
                   child: Text(

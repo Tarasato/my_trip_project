@@ -24,4 +24,19 @@ class CallAPI {
       throw Exception('Failed to call API');
     }
   }
+
+  //method เรียก API บันทึกข้อมูลสมาชิกใหม่
+  static Future<Profile> callRegisterAPI(Profile profile) async {
+    //เรียกใช้ API แล้วเก็บค่าที่ได้ไว้ในตัวแปร
+    final responseData = await http.post(
+      Uri.parse(Env.hostName + '/mt6552410005/apis/newProfile.php'),
+      headers: {'content-type': 'application/json'},
+      body: jsonEncode(profile.toJson()),
+    );
+    if (responseData.statusCode == 200) {
+      return Profile.fromJson(jsonDecode(responseData.body));
+    } else {
+      throw Exception('Failed to call API');
+    }
+  }
 }
