@@ -1,4 +1,4 @@
-// ignore_for_file: sort_child_properties_last, prefer_const_constructors, use_build_context_synchronously, depend_on_referenced_packages
+// ignore_for_file: sort_child_properties_last, prefer_const_constructors, use_build_context_synchronously, depend_on_referenced_packages, unused_import, unused_local_variable
 
 import 'dart:convert';
 import 'dart:io';
