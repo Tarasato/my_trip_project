@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:my_trip_project/views/introduction_ui.dart';
 import 'package:my_trip_project/views/login_ui.dart';
 
 class SplashScreenUI extends StatefulWidget {
@@ -20,7 +21,7 @@ class _SplashScreenUIState extends State<SplashScreenUI> {
       () => Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => LoginUI(),
+          builder: (context) => IntroductionUI(),
         ),
       ),
     );

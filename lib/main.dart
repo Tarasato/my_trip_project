@@ -6,18 +6,18 @@ import 'package:my_trip_project/views/splash_screen_ui.dart';
 
 void main() {
   runApp( 
-    MyDiaryfood()
+    MyTrip()
   );
 }
 
-class MyDiaryfood extends StatefulWidget {
-  const MyDiaryfood({super.key});
+class MyTrip extends StatefulWidget {
+  const MyTrip({super.key});
 
   @override
-  State<MyDiaryfood> createState() => _MyDiaryfoodState();
+  State<MyTrip> createState() => _MyTripState();
 }
 
-class _MyDiaryfoodState extends State<MyDiaryfood> {
+class _MyTripState extends State<MyTrip> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
