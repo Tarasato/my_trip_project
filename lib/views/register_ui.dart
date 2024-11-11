@@ -1,4 +1,4 @@
-// ignore_for_file: sort_child_properties_last, prefer_const_constructors, use_build_context_synchronously, depend_on_referenced_packages, unused_import, unused_local_variable
+// ignore_for_file: sort_child_properties_last, prefer_const_constructors, use_build_context_synchronously, depend_on_referenced_packages, unused_import, unused_local_variable, unrelated_type_equality_checks
 
 import 'dart:convert';
 import 'dart:io';
@@ -29,46 +29,37 @@ class _RegisterUIState extends State<RegisterUI> {
   TextEditingController usernameCtrl = TextEditingController(text: '');
   TextEditingController passwordCtrl = TextEditingController(text: '');
 
-  File? showImage;
-  String? userpicture;
-  String? userPicture64;
+  File? _imageSelected;
+  String? _image64Selected;
 
-  takePhoto() async {
-    final image = await ImagePicker().pickImage(source: ImageSource.camera);
+  //method เปิดกล้องถ่ายรูป
+  Future<void> _openCamera() async {
+    final XFile? _picker = await ImagePicker().pickImage(
+      source: ImageSource.camera,
+      imageQuality: 80,
+      preferredCameraDevice: CameraDevice.rear,
+    );
 
-    if (image == null) return;
-
-    //เก็บรูปลงเครื่อง
-    Directory appDirectory = await getApplicationDocumentsDirectory();
-    String newDirectory = appDirectory.path + Uuid().v4();
-    File newImageFile = File(newDirectory);
-
-    //เก็บรูปในตัวแปรที่สร้างไว้ใน DB
-    userpicture = newDirectory;
-
-    await newImageFile.writeAsBytes(File(image.path).readAsBytesSync());
-    setState(() {
-      showImage = newImageFile;
-    });
+    if (_picker != null) {
+      setState(() {
+        _imageSelected = File(_picker.path);
+        _image64Selected = base64Encode(_imageSelected!.readAsBytesSync());
+      });
+    }
   }
 
-  SelectPhoto() async {
-    final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+  //method เปิดแกลลอรี่เลือกรูป
+  Future<void> _openGallery() async {
+    final XFile? _picker = await ImagePicker().pickImage(
+      source: ImageSource.gallery,
+    );
 
-    if (image == null) return;
-
-    //เก็บรูปลงเครื่อง
-    Directory appDirectory = await getApplicationDocumentsDirectory();
-    String newDirectory = appDirectory.path + Uuid().v4();
-    File newImageFile = File(newDirectory);
-
-    //เก็บรูปในตัวแปรที่สร้างไว้ใน DB
-    userpicture = newDirectory;
-
-    await newImageFile.writeAsBytes(File(image.path).readAsBytesSync());
-    setState(() {
-      showImage = newImageFile;
-    });
+    if (_picker != null) {
+      setState(() {
+        _imageSelected = File(_picker.path);
+        _image64Selected = base64Encode(_imageSelected!.readAsBytesSync());
+      });
+    }
   }
 
   showWarningMessage(context, msg) async {
@@ -157,14 +148,14 @@ class _RegisterUIState extends State<RegisterUI> {
                   children: [
                     IconButton(
                       onPressed: () {
-                        takePhoto();
+                        _openCamera();
                       },
                       icon: Icon(
                         FontAwesomeIcons.cameraRetro,
                         color: Colors.amber,
                       ),
                     ),
-                    showImage == null
+                    _imageSelected == null
                         ? CircleAvatar(
                             radius: MediaQuery.of(context).size.width * 0.2,
                             child: ClipOval(
@@ -176,7 +167,7 @@ class _RegisterUIState extends State<RegisterUI> {
                         : ClipRRect(
                             borderRadius: BorderRadius.circular(100),
                             child: Image.file(
-                              showImage!,
+                              _imageSelected!,
                               width: MediaQuery.of(context).size.width * 0.4,
                               height: MediaQuery.of(context).size.width * 0.4,
                               fit: BoxFit.cover,
@@ -184,7 +175,7 @@ class _RegisterUIState extends State<RegisterUI> {
                           ),
                     IconButton(
                       onPressed: () {
-                        SelectPhoto();
+                        _openGallery();
                       },
                       icon: Icon(
                         FontAwesomeIcons.photoFilm,
@@ -298,24 +289,23 @@ class _RegisterUIState extends State<RegisterUI> {
                     } else if (phoneCtrl.text.trim().isEmpty == true) {
                       showWarningMessage(context, 'กรุณาป้อนเบอร์โทรศัพท์');
                     } else if (phoneCtrl.text.trim().length != 10) {
-                      showWarningMessage(context, 'กรุณาป้อนเบอร์โทรศัพท์ให้ถูกต้อง');
+                      showWarningMessage(
+                          context, 'กรุณาป้อนเบอร์โทรศัพท์ให้ถูกต้อง');
                     } else if (usernameCtrl.text.trim().isEmpty == true) {
                       showWarningMessage(context, 'กรุณาป้อนชื่อผู้ใช้');
                     } else if (passwordCtrl.text.trim().isEmpty == true) {
                       showWarningMessage(context, 'กรุณาป้อนรหัสผ่าน');
-                    } else if (showImage == null) {
+                    } else if (_imageSelected == null ||
+                        _image64Selected == null) {
                       showWarningMessage(context, 'กรุณาถ่ายรูป/เลือกรูป');
                     } else {
-                      //final bytes = await showImage!.readAsBytes();
-                      //userPicture64 = base64Encode(bytes);
-                      //บันทึกลงฐานข้อมูล
                       Profile profile = Profile(
-                        username: usernameCtrl.text.trim(),
-                        password: passwordCtrl.text.trim(),
+                        fullname: fullnameCtrl.text.trim(),
                         email: emailCtrl.text.trim(),
                         phone: phoneCtrl.text.trim(),
-                        fullname: fullnameCtrl.text.trim(),
-                        //userpicture: userPicture64,
+                        username: usernameCtrl.text.trim(),
+                        password: passwordCtrl.text.trim(),
+                        upic: _image64Selected,
                       );
                       CallAPI.callRegisterAPI(profile).then((value) {
                         if (value.message == '1') {
@@ -323,9 +313,16 @@ class _RegisterUIState extends State<RegisterUI> {
                               .then((value) {
                             Navigator.pop(context);
                           });
-                        } else {
+                        } else if (value.message == '2') {
                           showWarningMessage(
-                              context, 'เกิดข้อผิดพลาด กรุณาติดต่อผู้ดูแลระบบ');
+                              context, 'ชื่อผู้ใช้นี้มีอยู่ในระบบแล้ว');
+                        } else if (value.message == '3') {
+                          print(value.message);
+                          showWarningMessage(
+                              context, 'ชื่อนี้มีอยู่ในระบบแล้ว');
+                        } else {
+                          showWarningMessage(context,
+                              'ลงทะเบียนไม่สําเร็จ กรุณาลองใหม่อีกครั้ง');
                         }
                       });
                     }

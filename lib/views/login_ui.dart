@@ -146,8 +146,10 @@ class _LoginUIState extends State<LoginUI> {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    if (usernameCtrl.text.trim().isEmpty && passwordCtrl.text.trim().isEmpty) {
-                      showWaringDialog(context, 'กรุณาป้อนชื่อผู้ใช้และรหัสผ่าน');
+                    if (usernameCtrl.text.trim().isEmpty &&
+                        passwordCtrl.text.trim().isEmpty) {
+                      showWaringDialog(
+                          context, 'กรุณาป้อนชื่อผู้ใช้และรหัสผ่าน');
                     } else if (usernameCtrl.text.trim().isEmpty) {
                       showWaringDialog(context, 'กรุณาป้อนชื่อผู้ใช้');
                     } else if (passwordCtrl.text.trim().isEmpty) {
@@ -162,19 +164,21 @@ class _LoginUIState extends State<LoginUI> {
                         if (value.message == '1') {
                           // เมื่อเข้าสู่ระบบสำเร็จ
                           Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => HomeUI(), // ส่งข้อมูลผู้ใช้ไปหน้า Home
-                            ),
-                          );
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => HomeUI(profile: value,)));
                         } else {
-                          showWaringDialog(context, 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง');
+                          showWaringDialog(
+                              context, 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง');
                         }
                       });
                     }
                   },
                   child: Text(
                     'SIGN IN',
+                    style: TextStyle(
+                      color: Colors.grey[800],
+                    ),
                   ),
                   style: ElevatedButton.styleFrom(
                     fixedSize: Size(
@@ -183,12 +187,6 @@ class _LoginUIState extends State<LoginUI> {
                     ),
                     backgroundColor: Colors.amber,
                   ),
-                ),
-                CheckboxListTile(
-                  onChanged: (paramValue) {},
-                  value: false,
-                  title: Text('จำค่าการเข้าใช้งานแอปฯ'),
-                  controlAffinity: ListTileControlAffinity.leading,
                 ),
                 TextButton(
                   onPressed: () {
@@ -199,7 +197,9 @@ class _LoginUIState extends State<LoginUI> {
                       ),
                     );
                   },
-                  child: Text('ลงทะเบียนเข้าใช้งาน'),
+                  child: Text(
+                    'ลงทะเบียนเข้าใช้งาน',
+                  ),
                 )
               ],
             ),

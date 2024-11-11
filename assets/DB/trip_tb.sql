@@ -16,33 +16,6 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `myprofile_tb`
---
-
-DROP TABLE IF EXISTS `myprofile_tb`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `myprofile_tb` (
-  `user_id` int(11) NOT NULL AUTO_INCREMENT,
-  `username` varchar(50) NOT NULL,
-  `password` varchar(255) NOT NULL,
-  `email` varchar(100) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `fullname` varchar(50) NOT NULL,
-  `phone` char(10) NOT NULL,
-  `upic` varchar(100) NOT NULL,
-  PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `myprofile_tb`
---
-
-/*!40000 ALTER TABLE `myprofile_tb` DISABLE KEYS */;
-/*!40000 ALTER TABLE `myprofile_tb` ENABLE KEYS */;
-
---
 -- Table structure for table `trip_tb`
 --
 
@@ -75,10 +48,6 @@ CREATE TABLE `trip_tb` (
 
 /*!40000 ALTER TABLE `trip_tb` DISABLE KEYS */;
 /*!40000 ALTER TABLE `trip_tb` ENABLE KEYS */;
-
---
--- Dumping routines for database 'sautrip_db'
---
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -89,4 +58,4 @@ CREATE TABLE `trip_tb` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-11-11 23:43:47
+-- Dump completed on 2024-11-11 23:43:38
