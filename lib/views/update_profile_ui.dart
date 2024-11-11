@@ -9,7 +9,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:my_trip_project/models/Profile.dart';
 import 'package:my_trip_project/services/call_api.dart';
 import 'package:my_trip_project/utils/env.dart';
-import 'package:my_trip_project/views/home_ui.dart';
 import 'package:my_trip_project/views/login_ui.dart';
 
 class UpdateProfileUI extends StatefulWidget {
