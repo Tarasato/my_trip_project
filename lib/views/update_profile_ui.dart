@@ -551,7 +551,7 @@ class _UpdateProfileUIState extends State<UpdateProfileUI> {
                           }
                         });
                       }
-                    } else if (_imageSelected != null) {
+                    } else if (_imageSelected != null || _image64Selected != null){
                       if (widget.profile!.fullname !=
                           fullnameCtrl.text.trim()) {
                         Profile profile = Profile(
