@@ -132,6 +132,7 @@ class _UpdateProfileUIState extends State<UpdateProfileUI> {
   @override
   void initState() {
     super.initState();
+    print(widget.profile!.upic!);
     fullnameCtrl.text = widget.profile!.fullname!;
     usernameCtrl.text = widget.profile!.username!;
     passwordCtrl.text = widget.profile!.password!;
@@ -497,114 +498,88 @@ class _UpdateProfileUIState extends State<UpdateProfileUI> {
                         passwordCtrl.text.trim().isEmpty ||
                         phoneCtrl.text.trim().isEmpty) {
                       showWaringDialog(context, 'กรุณาป้อนข้อมูลให้ครบถ้วน');
-                    } else if (_image64Selected == '' || _image64Selected == null) {
+                    } else if (_image64Selected == "" ||
+                        _image64Selected == null) {
                       //ไม่ได้แก้ไขภาพ แก้ไขชื่อ
                       //ส่งข้อมูลไปเก็บลงฐานข้อมูล
-                      if (fullnameCtrl.text.trim() == widget.profile!.fullname) {//แก้ไขชื่อ
-                        Profile profile = Profile(
-                          userId: widget.profile!.userId!,
-                          fullname: fullnameCtrl.text.trim(),
-                          upic: widget.profile!.upic!,
-                          //username: widget.profile!.username!,
-                          email: emailCtrl.text.trim(),
-                          password: passwordCtrl.text.trim(),
-                          phone: phoneCtrl.text.trim(),
-                        );
-                        //เรียกใช้ API
-                        CallAPI.callUpdateProfileAPI(profile).then((value) {
-                          if (value.message == '1') {
-                            showCompleteDialog(
-                                    context, 'บันทึกการแก้ไขสำเร็จ!!')
-                                .then((value) {
-                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginUI()));
-                            });
-                          } else if (value.message == '2') {
-                            showWaringDialog(
-                                context, 'ชื่อนี้ถูกใช้งานอยู่แล้ว');
-                          } else {
-                            showWaringDialog(context,
-                                'บันทึกการแก้ไขไม่สําเร็จ กรุณาลองใหม่อีกครั้ง');
-                          }
-                        });
-                      } else {
-                        Profile profile = Profile(
-                          userId: widget.profile!.userId!,
-                          fullname: fullnameCtrl.text.trim(),
-                          email: emailCtrl.text.trim(),
-                          password: passwordCtrl.text.trim(),
-                          phone: phoneCtrl.text.trim(),
-                        );
-                        //เรียกใช้ API
-                        CallAPI.callUpdateProfileAPI(profile).then((value) {
-                          if (value.message == '1') {
-                            showCompleteDialog(
-                                    context, 'บันทึกการแก้ไขสำเร็จ!!')
-                                .then((value) {
-                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginUI()));
-                            });
-                          } else if (value.message == '2') {
-                            showWaringDialog(
-                                context, 'ชื่อนี้ถูกใช้งานอยู่แล้ว');
-                          } else {
-                            showWaringDialog(context,
-                                'บันทึกการแก้ไขไม่สําเร็จ กรุณาลองใหม่อีกครั้ง');
-                          }
-                        });
-                      }
-                    } else if (_imageSelected != null || _image64Selected != null){
-                      if (widget.profile!.fullname !=
-                          fullnameCtrl.text.trim()) {
-                        Profile profile = Profile(
-                          userId: widget.profile!.userId!,
-                          fullname: fullnameCtrl.text.trim(),
-                          username: widget.profile!.username!,
-                          email: emailCtrl.text.trim(),
-                          password: passwordCtrl.text.trim(),
-                          phone: phoneCtrl.text.trim(),
-                          upic: _image64Selected,
-                        );
-                        //เรียกใช้ API
-                        CallAPI.callUpdateProfileAPI(profile).then((value) {
-                          if (value.message == '1') {
-                            showCompleteDialog(
-                                    context, 'บันทึกการแก้ไขสำเร็จ!!')
-                                .then((value) {
-                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginUI()));
-                            });
-                          } else if (value.message == '2') {
-                            showWaringDialog(
-                                context, 'ชื่อนี้ถูกใช้งานอยู่แล้ว');
-                          } else {
-                            showWaringDialog(context,
-                                'บันทึกการแก้ไขไม่สําเร็จ กรุณาลองใหม่อีกครั้ง');
-                          }
-                        });
-                      } else {
-                        Profile profile = Profile(
-                          userId: widget.profile!.userId!,
-                          //fullname: widget.profile!.fullname!,
-                          email: emailCtrl.text.trim(),
-                          password: passwordCtrl.text.trim(),
-                          phone: phoneCtrl.text.trim(),
-                          upic: _image64Selected,
-                        );
-                        //เรียกใช้ API
-                        CallAPI.callUpdateProfileAPI(profile).then((value) {
-                          if (value.message == '1') {
-                            showCompleteDialog(
-                                    context, 'บันทึกการแก้ไขสำเร็จ!!')
-                                .then((value) {
-                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginUI()));
-                            });
-                          } else if (value.message == '2') {
-                            showWaringDialog(
-                                context, 'ชื่อนี้ถูกใช้งานอยู่แล้ว');
-                          } else {
-                            showWaringDialog(context,
-                                'บันทึกการแก้ไขไม่สําเร็จ กรุณาลองใหม่อีกครั้ง');
-                          }
-                        });
-                      }
+                      // if (fullnameCtrl.text.trim() == widget.profile!.fullname) {//แก้ไขชื่อ
+                      //   Profile profile = Profile(
+                      //     userId: widget.profile!.userId!,
+                      //     fullname: fullnameCtrl.text.trim(),
+                      //     email: emailCtrl.text.trim(),
+                      //     password: passwordCtrl.text.trim(),
+                      //     phone: phoneCtrl.text.trim(),
+                      //   );
+                      //   //เรียกใช้ API
+                      //   CallAPI.callUpdateProfileAPI(profile).then((value) {
+                      //     if (value.message == '1') {
+                      //       showCompleteDialog(
+                      //               context, 'บันทึกการแก้ไขสำเร็จ!!')
+                      //           .then((value) {
+                      //         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginUI()));
+                      //       });
+                      //     } else if (value.message == '2') {
+                      //       showWaringDialog(
+                      //           context, 'ชื่อนี้ถูกใช้งานอยู่แล้ว');
+                      //     } else {
+                      //       showWaringDialog(context,
+                      //           'บันทึกการแก้ไขไม่สําเร็จ กรุณาลองใหม่อีกครั้ง');
+                      //     }
+                      //   });
+                      // } else {
+                      Profile profile = Profile(
+                        userId: widget.profile!.userId!,
+                        fullname: fullnameCtrl.text.trim(),
+                        email: emailCtrl.text.trim(),
+                        password: passwordCtrl.text.trim(),
+                        phone: phoneCtrl.text.trim(),
+                      );
+                      //เรียกใช้ API
+                      CallAPI.callUpdateProfileAPI(profile).then((value) {
+                        if (value.message == '1') {
+                          showCompleteDialog(context, 'บันทึกการแก้ไขสำเร็จ!!')
+                              .then((value) {
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => LoginUI()));
+                          });
+                        } else if (value.message == '2') {
+                          showWaringDialog(context, 'ชื่อนี้ถูกใช้งานอยู่แล้ว');
+                        } else {
+                          showWaringDialog(context,
+                              'บันทึกการแก้ไขไม่สําเร็จ กรุณาลองใหม่อีกครั้ง');
+                        }
+                      });
+                      //}
+                    } else if (_imageSelected != null ||
+                        _image64Selected != null) {
+                      Profile profile = Profile(
+                        userId: widget.profile!.userId!,
+                        fullname: fullnameCtrl.text.trim(),
+                        username: widget.profile!.username!,
+                        email: emailCtrl.text.trim(),
+                        password: passwordCtrl.text.trim(),
+                        phone: phoneCtrl.text.trim(),
+                        upic: _image64Selected,
+                      );
+                      //เรียกใช้ API
+                      CallAPI.callUpdateProfileAPI(profile).then((value) {
+                        if (value.message == '1') {
+                          showCompleteDialog(context, 'บันทึกการแก้ไขสำเร็จ!!')
+                              .then((value) {
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => LoginUI()));
+                          });
+                        } else if (value.message == '2') {
+                          showWaringDialog(context, 'ชื่อนี้ถูกใช้งานอยู่แล้ว');
+                        } else {
+                          showWaringDialog(context,
+                              'บันทึกการแก้ไขไม่สําเร็จ กรุณาลองใหม่อีกครั้ง');
+                        }
+                      });
                     }
                   },
                   child: Text(
@@ -641,12 +616,17 @@ class _UpdateProfileUIState extends State<UpdateProfileUI> {
                       if (value.message == '1') {
                         showCompleteDialog(context, 'ลบบัญชีผู้ใช้สําเร็จ!!')
                             .then((value) {
-                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginUI()));
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => LoginUI()));
                         });
                       } else if (value.message == '2') {
-                        showWaringDialog(context, 'เกิดข้อผิดพลาดในการลบบัญชีผู้ใช้');
+                        showWaringDialog(
+                            context, 'เกิดข้อผิดพลาดในการลบบัญชีผู้ใช้');
                       } else {
-                        showWaringDialog(context, 'ลบบัญชีผู้ใช้ไม่สําเร็จ กรุณาลองใหม่อีกครั้ง');
+                        showWaringDialog(context,
+                            'ลบบัญชีผู้ใช้ไม่สําเร็จ กรุณาลองใหม่อีกครั้ง');
                       }
                     });
                   },
@@ -668,7 +648,6 @@ class _UpdateProfileUIState extends State<UpdateProfileUI> {
                   ),
                 ),
               ),
-            
             ],
           ),
         )),

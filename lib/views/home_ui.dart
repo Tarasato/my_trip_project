@@ -33,6 +33,7 @@ class _HomeUIState extends State<HomeUI> {
 
   @override
   void initState() {
+    print(widget.profile!.upic!);
     Trip trip = Trip(
       userId: widget.profile!.userId,
     );
