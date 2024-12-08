@@ -160,7 +160,7 @@ class _IntroductionUIState extends State<IntroductionUI> {
         done: Text(
           'เริ่มต้น',
           style: GoogleFonts.kanit(
-            fontSize: 30,
+            fontSize: 29,
             fontWeight: FontWeight.bold,
             color: Colors.amber,
           ),
